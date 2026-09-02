@@ -1,0 +1,6 @@
+{
+    // Define uma fonte compatível com ligaduras
+    "editor.fontFamily": "'Fira Code', 'JetBrains Mono', 'Cascadia Code', monospace",
+    // Ativa as ligaduras tipográficas no editor
+    "editor.fontLigatures": true
+}
