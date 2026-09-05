@@ -1,6 +1,10 @@
 {
     "compilerOptions": {
       "target": "ES2022",
-      "noUncheckedIndexedAccess": true
+      "module": "NodeNext",
+      "moduleResolution": "NodeNext",
+      "esModuleInterop": true,
+      "noUncheckedIndexedAccess": true,
+      "types": ["node"]
     }
 }

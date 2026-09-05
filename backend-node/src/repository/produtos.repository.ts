@@ -39,5 +39,14 @@ class ProdutosRepository {
         return todosProdutos
     }
 
+    static async atualizarImagemDoProduto(produtoUuid: string, imagem: Buffer) {
+        const image = new Blob([Uint8Array.from(imagem)], { type: "image/jpeg" })
+        const formData = new FormData()
+        formData.append("image", image)
+        const api = await fetch(`https://api.erpcloud.com.br/api/v1/public/products/${produtoUuid}/image`, {
+            method: "POST",
+            body: formData})
+    }
+
     
 }
