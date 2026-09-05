@@ -13,7 +13,7 @@ type RespostaListaProdutos = {
     }
 }
 
-class ProdutosRepository {
+export default class ProdutosRepository {
     static async buscarProdutosDaLoja(storeUuid: string, page: number = 1): Promise<RespostaListaProdutos> {
         const api = await fetch(`https://api.erpcloud.com.br/api/v1/public/stores/${storeUuid}/products?page=${page}`)
         const response: RespostaListaProdutos = await api.json()
