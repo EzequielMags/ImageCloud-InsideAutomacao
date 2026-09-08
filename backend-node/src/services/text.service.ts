@@ -8,10 +8,15 @@ type CandidatoComPalavras = {
 }
 
 
-class TextService {
+export default class TextService {
     static normalizarTexto(texto: string) {
         const deletaAcento = texto.normalize("NFD")
         return deletaAcento.replace(/[\u0300-\u036f]/g, "").replace(/[^a-zA-Z0-9 ]/g, "").toLowerCase()
+    }
+
+    static extrairTextoSemExtensao(arquivo: string) {
+        return arquivo.split(".").slice(0, -1).join(".")
+        
     }
 
     static extrairPalavrasChaves(texto: string) {

@@ -1,4 +1,4 @@
-type Produto = {
+export type Produto = {
     uuid: string
     sale_name: string
     category: string
@@ -6,19 +6,21 @@ type Produto = {
     image_url: string | null
 }
 
-type RespostaListaProdutos = {
+export type RespostaListaProdutos = {
     data: Produto[]
     meta: {
         last_page: number
     }
 }
 
-export default class ProdutosRepository {
+export  class ProdutosRepository {
     static async buscarProdutosDaLoja(storeUuid: string, page: number = 1): Promise<RespostaListaProdutos> {
         const api = await fetch(`https://api.erpcloud.com.br/api/v1/public/stores/${storeUuid}/products?page=${page}`)
         const response: RespostaListaProdutos = await api.json()
         return response
     }
+
+  
 
     static async buscarTodosProdutosDaLoja(storeUuid: string): Promise<Produto[]> {
         const todosProdutos: Produto[] = []

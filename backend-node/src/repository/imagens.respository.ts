@@ -8,4 +8,5 @@ export default class ImagensRepository {
     static async lerConteudoDaImagem(caminhoImagem: string): Promise<Buffer> {
         return fs.readFile(caminhoImagem)
     }
+
 }
