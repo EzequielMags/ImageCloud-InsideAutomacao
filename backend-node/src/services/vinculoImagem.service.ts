@@ -32,18 +32,62 @@ export default class VinculoImagemService {
     
         for (const categoria of categorias) {
             const imagensDaCategoria = await ImagensRepository.buscarImagensDaCategoria(categoria)
-            const imagensComPalavras  = imagensDaCategoria.map((arquivo) => {
+            const imagensFormatadas  = imagensDaCategoria.map((arquivo) => {
                 const textoSemExtensao = TextService.extrairTextoSemExtensao(arquivo)
                 const textoNormalizado = TextService.normalizarTexto(textoSemExtensao)
                 const palavrasChave = TextService.extrairPalavrasChaves(textoNormalizado)
 
                 return {id: arquivo, nome: arquivo, palavrasChave: palavrasChave}
             })
+            
+            const produtosDaCategoria = produtosPorCategoria[categoria]
+            /// produtosPorCategoria[categoria] é acesso por índice em um Record, então o TypeScript trata o valor como Produto[] | undefined. O for...of não aceita isso sem checagem.
+            ///Foi adicionado um if (!produtosDaCategoria) continue antes do loop. Com isso o compilador entende que, dentro do for, a lista existe. O erro some.
+            
+            if (!produtosDaCategoria) continue 
 
-        // continuidade do codigo....
+            for (const produto of produtosDaCategoria) {
+                const nomeProduto = produto.sale_name
+                const produtoNormalizado = TextService.normalizarTexto(nomeProduto)
+                const palavrasChaveProduto = TextService.extrairPalavrasChaves(produtoNormalizado)
+                const imagensFiltradas = TextService.filtrarCandidatos(palavrasChaveProduto, imagensFormatadas)
+            
+                const listaVencedores = TextService.decidirVencedor(palavrasChaveProduto, imagensFiltradas)
+
+                if (listaVencedores.length === 0) {
+                    yield "Sem Match"
+
+                } else {
+                    // chamar upload
+                    const imagemVencedora = listaVencedores[0]
+                    
+                    if (!imagemVencedora) continue
+                   
+                    const conteudoImagem = await ImagensRepository.lerConteudoDaImagem(`./src/assets/Banco de Imagens/${categoria}/SEM LOGO/${imagemVencedora.nome}`)
+                   
+                    await ProdutosRepository.atualizarImagemDoProduto(produto.uuid, conteudoImagem)
+                    if (listaVencedores.length > 1) {
+                
+                        yield "Match com duplicidade" 
+                    } else {
+                       
+                        yield "match Perfeito"
+                    }
+                    
+                }
+
+                
+            }
         
         
-        }
+
+
+
+            
+
+
+
+    }
     }
 }
 
