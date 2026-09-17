@@ -1,3 +1,4 @@
+import { stat } from "fs"
 import ImagensRepository from "../repository/imagens.respository.js"
 import { Produto, ProdutosRepository } from "../repository/produtos.repository.js"
 import TextService from "./text.service.js"
@@ -7,6 +8,7 @@ export default class VinculoImagemService {
 
 
     static filtrarProdutosSemImagem(produtos: Produto[]): Produto[] {
+        // retorna apenas os produtos que NÂO CONSTA IMAGEM
         return produtos.filter((produto) => produto.image_path === null && produto.image_url === null)
     }
   
@@ -24,6 +26,7 @@ export default class VinculoImagemService {
     }
 
     static async *vincularImagensAosProdutos(lojaUuid: string) {
+        // função principal, que rodará tudo
         const todosOsProdutos = await ProdutosRepository.buscarTodosProdutosDaLoja(lojaUuid)
         const produtosSemImagem =  this.filtrarProdutosSemImagem(todosOsProdutos)
         const produtosPorCategoria  =  this.agruparProdutosPorCategoria(produtosSemImagem)
@@ -55,7 +58,10 @@ export default class VinculoImagemService {
                 const listaVencedores = TextService.decidirVencedor(palavrasChaveProduto, imagensFiltradas)
 
                 if (listaVencedores.length === 0) {
-                    yield "Sem Match"
+                    yield {
+                        produto: produto,
+                        status: "sem_correspondencia",
+                    }
 
                 } else {
                     // chamar upload
@@ -68,10 +74,18 @@ export default class VinculoImagemService {
                     await ProdutosRepository.atualizarImagemDoProduto(produto.uuid, conteudoImagem)
                     if (listaVencedores.length > 1) {
                 
-                        yield "Match com duplicidade" 
+                        yield {
+                            produto: produto,
+                            imagens: listaVencedores,
+                            status: "duplicado"
+                        }
                     } else {
                        
-                        yield "match Perfeito"
+                        yield {
+                            produto: produto,
+                            imagem: imagemVencedora,
+                            status: "vinculado"
+                        }
                     }
                     
                 }
