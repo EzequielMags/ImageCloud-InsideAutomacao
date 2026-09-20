@@ -1,5 +1,4 @@
 import Fastify  from "fastify";
-import VinculoImagemService from "../services/vinculo-imagem.service.js";
 import VinculoImagemController from "../controllers/vinculo-imagem.controller.js";
 
 const fastify = Fastify()
