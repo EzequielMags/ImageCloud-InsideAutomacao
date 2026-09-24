@@ -1,4 +1,3 @@
-import { stat } from "fs"// tentar excluir dps (n quero estragar os commitss)
 import ImagensRepository from "../repository/imagens.respository.js"
 import { Produto, ProdutosRepository } from "../repository/produtos.repository.js"
 import TextService from "./text.service.js"
