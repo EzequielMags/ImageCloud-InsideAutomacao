@@ -4,8 +4,6 @@ import { Produto, ProdutosRepository } from "../repository/produtos.repository.j
 import TextService from "./text.service.js"
 
 export default class VinculoImagemService {
-  
-
 
     static filtrarProdutosSemImagem(produtos: Produto[]): Produto[] {
         // retorna apenas os produtos que NÂO CONSTA IMAGEM
@@ -30,6 +28,8 @@ export default class VinculoImagemService {
         const todosOsProdutos = await ProdutosRepository.buscarTodosProdutosDaLoja(lojaUuid)
         const produtosSemImagem =  this.filtrarProdutosSemImagem(todosOsProdutos)
         const produtosPorCategoria  =  this.agruparProdutosPorCategoria(produtosSemImagem)
+
+        yield {quantidadeDeProdutos: produtosSemImagem.length}
 
         const categorias =  Object.keys(produtosPorCategoria )
     
@@ -92,16 +92,8 @@ export default class VinculoImagemService {
 
                 
             }
-        
-        
 
-
-
-            
-
-
-
-    }
+        }
     }
 }
 

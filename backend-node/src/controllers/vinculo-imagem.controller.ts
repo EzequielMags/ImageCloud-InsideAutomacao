@@ -4,6 +4,7 @@ import VinculoImagemService from "../services/vinculo-imagem.service.js"
 export default class VinculoImagemController {
     static async vinculoImagem(request: FastifyRequest, reply: FastifyReply) {
         const { lojaUuid } = request.params as { lojaUuid: string }
+        const totalDeProdutos = 0
         let vinculados = 0
         let duplicados = 0 
         let semCorrespondencia = 0 
