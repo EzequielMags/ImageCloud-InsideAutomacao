@@ -1,0 +1,53 @@
+.form {
+    margin-top:25%;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.form input {
+    outline: none;
+    width: 388px;
+    height: 50px;
+    background-color: #1E1E21;
+    border: 1px solid #3A3A40;
+    border-radius: 18px;
+    color: #fff;
+    padding: 1rem;
+    font-family: 600;
+    font-size: .9rem;
+}
+
+.form input::placeholder {
+    color: #7D7D7D;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+}
+
+.form button {
+    width: 252px;
+    height: 50px;
+    background-color: #F58220;
+    color: #fff;
+    font-weight: bold;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 16px;
+}
+
+
+@media screen and (min-width: 1200px){
+    .form {
+        margin-top: 10%
+    };
+
+
+    /*
+        Se for necessario alterar o tamanho do input e do botao
+    */
+}
