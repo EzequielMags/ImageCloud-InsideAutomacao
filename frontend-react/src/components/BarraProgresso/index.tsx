@@ -1,21 +1,27 @@
-import { useState } from "react"
 import styles from "./barraProgresso.module.css"
 
-
-
 export type PropsProgresso = {
-    cor: string,
     percent: number
     
 }
 
-export function BarraProgresso() {
-    const [progress, setProgress] = useState<number>(10)
+export function BarraProgresso({percent}: PropsProgresso) {
+    let textoDinamico = ""
+    let corBarraProgresso
+
+    if (percent === 100){
+        textoDinamico = "Imagens Sincronizadas"
+        corBarraProgresso = "#22C55E"
+    }   else {
+        textoDinamico = "Sincronizando Imagens..."
+        corBarraProgresso = "#F58220"
+    }
+
     return(
         <div className={styles.container}>
-            <h2>Sincronizando Imagens...</h2>
-            <div className={`${styles.progress}`}>
-                <div style={{width: `${progress}%`}}></div>{progress}%
+            <h2>{textoDinamico}</h2>
+            <div style={{border: `2px solid ${corBarraProgresso}`}} className={`${styles.progress}`}>
+                <div style={{width: `${percent}%`, backgroundColor: `${corBarraProgresso}`}}></div>{percent}%
             </div> 
         </div>
     )
