@@ -26,6 +26,9 @@ body {
 
 }
 
-.form {
-  background-color: red;
+hr {
+  width: 95%;
+  border-radius: 12px;
+  border: 1.5px solid#252525;
+  margin: 0 auto;
 }
