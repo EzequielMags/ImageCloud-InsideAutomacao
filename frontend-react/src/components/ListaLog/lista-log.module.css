@@ -7,3 +7,10 @@
     color: #FFF;
     font-weight: 400;
 }
+
+.container ul {
+    margin-top: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}

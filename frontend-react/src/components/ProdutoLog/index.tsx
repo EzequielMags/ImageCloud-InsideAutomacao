@@ -15,9 +15,9 @@ export type ConfiguracaoStatusProduto = {
 }
 
 const ConfiguracaoProduto: Record<StatusProduto, ConfiguracaoStatusProduto> = {
-    vinculado: {icone: <Check color="#22C55E" size={20} />, cor: "#22C55E", statusFormatado: "Vinculado"},
-    duplicado: {icone: <TriangleAlert color="#FDB813" size={20} />, cor: "#FDB813", statusFormatado: "Duplicado"},
-    sem_correspondencia: {icone: <X color="#FD1B13" size={20} />, cor: "#FD1B13B3", statusFormatado: "Sem Match"},
+    vinculado: {icone: <Check color="#22C55E" size={25} />, cor: "#22C55E", statusFormatado: "Vinculado"},
+    duplicado: {icone: <TriangleAlert color="#FDB813" size={25} />, cor: "#FDB813", statusFormatado: "Duplicado"},
+    sem_correspondencia: {icone: <X color="#FD1B13" size={25} />, cor: "#FD1B13B3", statusFormatado: "Sem Match"},
 }
 
 export default function ProdutoLog({nome, status}: Props) {
@@ -26,11 +26,11 @@ export default function ProdutoLog({nome, status}: Props) {
 
   return(
     <div className={styles.container}>
-        <div>
+        <div className={styles.info}>
             {icone}
             <h3>{nome}</h3>
         </div>
-        <div>
+        <div className={styles.status}>
             <h3 style={{color: cor}}>{statusFormatado}</h3>
         </div>
     </div>

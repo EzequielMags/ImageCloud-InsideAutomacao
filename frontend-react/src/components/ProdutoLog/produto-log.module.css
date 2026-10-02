@@ -1,0 +1,41 @@
+.container {
+    margin:  auto;
+    width: 55%;
+    padding: 0 1.5rem;
+    display: flex;
+    background-color: #242424;
+    height: 4rem;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 16px;
+}
+
+.info {
+    display: flex;
+    gap: 1rem;
+}
+
+.info h3 {
+    color: #FFF;
+    font-weight: 400;
+}
+
+.status h3 {
+    font-weight: 400;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        width: 100%;
+
+    }
+
+    .info {
+        gap: 3rem;
+    }
+
+    .status {
+        display: none;
+    }
+    
+}
