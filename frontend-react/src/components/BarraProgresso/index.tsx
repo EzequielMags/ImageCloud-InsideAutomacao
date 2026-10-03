@@ -9,11 +9,19 @@ export function BarraProgresso({percent}: PropsProgresso) {
     let textoDinamico = ""
     let corBarraProgresso
 
+    if (percent === 0) {
+        textoDinamico = "Em Espera"
+        corBarraProgresso = "#F58220"
+    }
+
     if (percent === 100){
         textoDinamico = "Imagens Sincronizadas"
         corBarraProgresso = "#22C55E"
-    }   else {
+    }   else if (percent > 0 && percent < 100) {
         textoDinamico = "Sincronizando Imagens..."
+        corBarraProgresso = "#F58220"
+    } else {
+        textoDinamico = ""
         corBarraProgresso = "#F58220"
     }
 

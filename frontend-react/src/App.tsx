@@ -8,9 +8,8 @@ import ListaLog from './components/ListaLog'
 
 function App() {
 
-  const [statusHeader, setStatusHeader]= useState<StatusSincronizacao>("sincronizado") 
-  
-  const [progress, setProgress] = useState<number>(100)
+  const [statusHeader, setStatusHeader]= useState<StatusSincronizacao>("em_espera") 
+  const [progress, setProgress] = useState<number>(0)
   return (
 
     <main>

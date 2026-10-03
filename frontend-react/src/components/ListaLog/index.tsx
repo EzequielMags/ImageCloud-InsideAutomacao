@@ -4,9 +4,15 @@ import styles from "./lista-log.module.css"
 
 
 
+type ListaProdutos = {
+    nome: string,
+    status: StatusProduto
+}
+
 export default function ListaLog({/*adicionar parametro de produtos*/}) {
 
-    const produtosMockados = [
+
+    const produtosMockados: ListaProdutos[] = [
         {
             nome: "Produto 1",
             status: "vinculado"
@@ -25,9 +31,15 @@ export default function ListaLog({/*adicionar parametro de produtos*/}) {
     <div className={styles.container}>
         <h2>Log de Produtos</h2>
         <ul>
-            {produtosMockados.map((produto) => {
-                return <ProdutoLog nome={produto.nome} status={produto.status as StatusProduto} />
-            })/* .map da lista de produtos * */}
+            {
+                produtosMockados.map((produto) => (
+                    <ProdutoLog
+                        key={produto.nome}
+                        nome={produto.nome}
+                        status={produto.status}
+                    />
+                )) 
+            }
         </ul>
     </div>
 )

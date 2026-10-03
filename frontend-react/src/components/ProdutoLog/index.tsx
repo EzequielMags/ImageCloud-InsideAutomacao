@@ -25,7 +25,7 @@ export default function ProdutoLog({nome, status}: Props) {
     const {icone, cor, statusFormatado} = ConfiguracaoProduto[status]
 
   return(
-    <div className={styles.container}>
+    <li className={styles.container}>
         <div className={styles.info}>
             {icone}
             <h3>{nome}</h3>
@@ -33,6 +33,6 @@ export default function ProdutoLog({nome, status}: Props) {
         <div className={styles.status}>
             <h3 style={{color: cor}}>{statusFormatado}</h3>
         </div>
-    </div>
+    </li>
   )  
 }
