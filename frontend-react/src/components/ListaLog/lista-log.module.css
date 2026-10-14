@@ -9,8 +9,32 @@
 }
 
 .container ul {
+    height: 900px;
     margin-top: 3.5rem;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
     gap: 1.5rem;
 }
+
+.container ul::-webkit-scrollbar {
+    border: 2px solid #1E1E21;
+    border-radius: 16px;
+    background-color: #18181B ;
+}
+
+.container ul::-webkit-scrollbar-track {
+    background: #1E1E21;
+    border-radius: 5px;
+  }
+  
+  /* Target the vertical scrollbar thumb */
+  .container ul::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+  }
+  
+  /* Optional: Style on hover */
+  .container ul::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }

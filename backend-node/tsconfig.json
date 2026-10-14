@@ -5,6 +5,7 @@
       "moduleResolution": "NodeNext",
       "esModuleInterop": true,
       "noUncheckedIndexedAccess": true,
+      "skipLibCheck": true,
       "types": ["node"]
     }
 }

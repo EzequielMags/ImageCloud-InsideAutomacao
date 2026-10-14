@@ -3,38 +3,26 @@ import type { StatusProduto } from "../ProdutoLog"
 import styles from "./lista-log.module.css"
 
 
+type Props = {
+    listaResultados: ListaProdutos[]
+}
 
-type ListaProdutos = {
+export type ListaProdutos = {
+    uuid: string,
     nome: string,
     status: StatusProduto
 }
 
-export default function ListaLog({/*adicionar parametro de produtos*/}) {
-
-
-    const produtosMockados: ListaProdutos[] = [
-        {
-            nome: "Produto 1",
-            status: "vinculado"
-        },
-        {
-            nome: "Produto 2",
-            status: "duplicado"
-        },
-        {
-            nome: "Produto 3",
-            status: "sem_correspondencia"
-        },
-    ]
+export default function ListaLog({listaResultados}: Props) {
 
     return (
     <div className={styles.container}>
         <h2>Log de Produtos</h2>
         <ul>
             {
-                produtosMockados.map((produto) => (
+                listaResultados.map((produto) => (
                     <ProdutoLog
-                        key={produto.nome}
+                        key={produto.uuid}
                         nome={produto.nome}
                         status={produto.status}
                     />

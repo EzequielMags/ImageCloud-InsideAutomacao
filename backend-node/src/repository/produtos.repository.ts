@@ -14,40 +14,59 @@ export type RespostaListaProdutos = {
 }
 
 export  class ProdutosRepository {
-    static async buscarProdutosDaLoja(storeUuid: string, page: number = 1): Promise<RespostaListaProdutos> {
-        const api = await fetch(`https://api.erpcloud.com.br/api/v1/public/stores/${storeUuid}/products?page=${page}`)
-        const response: RespostaListaProdutos = await api.json()
-        return response
+    static async buscarProdutosDaLoja(storeUuid: string, page: number = 1): Promise<RespostaListaProdutos> {        
+            const api = await fetch(`https://api.erpcloud.com.br/api/v1/public/stores/${storeUuid}/products?page=${page}`)
+            const response: RespostaListaProdutos = await api.json()
+            return response
+
     }
 
   
 
     static async buscarTodosProdutosDaLoja(storeUuid: string): Promise<Produto[]> {
-        const todosProdutos: Produto[] = []
-        let page: number = 1
-        let lastPage: number | null = null
-
-        do {
-            const response = await this.buscarProdutosDaLoja(storeUuid,page )
-            todosProdutos.push(...response.data)
-
-            if (lastPage === null || lastPage === undefined) {
-                lastPage = response.meta.last_page
-            }
-
-            page ++
-        } while (page <= lastPage)
-
-        return todosProdutos
+            const todosProdutos: Produto[] = []
+            let page: number = 1
+            let lastPage: number | null = null
+    
+            do {
+                const response = await this.buscarProdutosDaLoja(storeUuid,page )
+                todosProdutos.push(...response.data)
+    
+                if (lastPage === null || lastPage === undefined) {
+                    lastPage = response.meta.last_page
+                }
+    
+                page ++
+            } while (page <= lastPage)
+    
+            return todosProdutos
+            
     }
 
     static async atualizarImagemDoProduto(produtoUuid: string, imagem: Buffer) {
-        const image = new Blob([Uint8Array.from(imagem)], { type: "image/jpeg" })
-        const formData = new FormData()
-        formData.append("image", image)
-        const api = await fetch(`https://api.erpcloud.com.br/api/v1/public/products/${produtoUuid}/image`, {
-            method: "POST",
-            body: formData})
+        try {
+            const image = new Blob([Uint8Array.from(imagem)], { type: "image/png" })
+            const formData = new FormData()
+            formData.append("image", image)
+            const api = await fetch(`https://api.erpcloud.com.br/api/v1/public/products/${produtoUuid}/image`, {
+                method: "POST",
+                headers: {
+                    "accept": "application/json"
+                },
+                body: formData
+            })
+
+            const response = await api.json()
+
+            console.log(api.ok)
+            console.log(api.status)
+            console.log(response)
+
+
+            
+        } catch (error) {
+            throw new Error(`Erro ao atualizar Imagem do Produto`, {cause: error})
+        }
     }
 
     

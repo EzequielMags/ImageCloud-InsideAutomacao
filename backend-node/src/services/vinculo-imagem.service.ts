@@ -1,3 +1,4 @@
+import { stat } from "node:fs"
 import ImagensRepository from "../repository/imagens.respository.js"
 import { Produto, ProdutosRepository } from "../repository/produtos.repository.js"
 import TextService from "./text.service.js"
@@ -24,13 +25,14 @@ export default class VinculoImagemService {
 
     static async *vincularImagensAosProdutos(lojaUuid: string) {
         // função principal, que rodará tudo
+        
         const todosOsProdutos = await ProdutosRepository.buscarTodosProdutosDaLoja(lojaUuid)
         const produtosSemImagem =  this.filtrarProdutosSemImagem(todosOsProdutos)
         const produtosPorCategoria  =  this.agruparProdutosPorCategoria(produtosSemImagem)
 
         yield {quantidadeDeProdutos: produtosSemImagem.length}
 
-        const categorias =  Object.keys(produtosPorCategoria )
+        const categorias =  Object.keys(produtosPorCategoria)
     
         for (const categoria of categorias) {
             const imagensDaCategoria = await ImagensRepository.buscarImagensDaCategoria(categoria)
@@ -68,8 +70,21 @@ export default class VinculoImagemService {
                     
                     if (!imagemVencedora) continue
                    
-                    const conteudoImagem = await ImagensRepository.lerConteudoDaImagem(`./src/assets/Banco de Imagens/${categoria}/SEM LOGO/${imagemVencedora.nome}`)
+                    const conteudoImagem = await ImagensRepository.lerConteudoDaImagem(`./src/assets/Banco de Imagens/${categoria}/${imagemVencedora.nome}`)
                    
+                    const tamanhoImagem = conteudoImagem.length 
+                    const tamanhoEmKb = tamanhoImagem / 1024
+
+                    if (tamanhoEmKb > 1536 ) {
+                        yield {
+                            produto: produto,
+                            imagem: imagemVencedora,
+                            status: "imagem_fora_do_limite"
+                        }
+
+                        continue
+                    }
+
                     await ProdutosRepository.atualizarImagemDoProduto(produto.uuid, conteudoImagem)
                     if (listaVencedores.length > 1) {
                 
